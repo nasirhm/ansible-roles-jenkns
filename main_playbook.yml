@@ -1,0 +1,8 @@
+---
+- name: Install jenkins by Roles
+  hosts: localhost
+  become: yes
+  gather_facts: false
+  tasks:
+   - import_role: 
+       name: jenkins

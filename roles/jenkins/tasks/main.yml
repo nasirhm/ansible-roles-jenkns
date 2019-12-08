@@ -1,0 +1,36 @@
+---
+# tasks file for roles-jenkins
+- name: install wget
+  yum:
+    name: wget
+    state: present
+
+- name: install openjdk
+  yum:
+    name: java-1.8.0-openjdk
+    state: present
+
+- name: Downloading Jenkins from yum repo
+  get_url:
+    url: "https://pkg.jenkins.io/redhat-stable/jenkins.repo"
+    dest: /etc/yum.repos.d/jenkins.repo
+
+- name: GPG Key
+  rpm_key:
+    state: present
+    key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+- name: Install Jenkins
+  dnf:
+   name: jenkins
+   state: present
+
+- name: start jenkins
+  systemd:
+   name: jenkins
+   state: started
+
+- name: enable jenkins
+  systemd:
+   name: jenkins
+   enabled: true
